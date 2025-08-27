@@ -53,6 +53,6 @@ jobs:
           changes: |
             {
               "tenants/values.yaml": {
-                "ops.sftpgo-user-updater.image": "us-docker.pkg.dev/plaidcloud-build/us-plaidcloud/tenant-tools/sftpgo-user-updater:${{ steps.docker_tag.outputs.tag }}"
+                "ops.sftpgo\-user\-updater.image": "us-docker.pkg.dev/plaidcloud-build/us-plaidcloud/tenant-tools/sftpgo-user-updater:${{ steps.docker_tag.outputs.tag }}"
               }
             }
