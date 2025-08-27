@@ -6,7 +6,7 @@ COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt \
  && rm /tmp/*
 
-COPY --chown=ops:ops sftpgo-user-manager.py /sftpgo-user-manager.py
+COPY --chown=ops:ops sftpgo-user-updater.py /sftpgo-user-updater.py
 WORKDIR /
 
 ENTRYPOINT ["python", "sftpgo-user-updater.py"]
