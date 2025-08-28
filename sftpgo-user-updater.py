@@ -12,7 +12,7 @@ class Provider(Enum):
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET'])
+@app.route("/")
 def get_new_user_data():
     
     content = request.get_json()
