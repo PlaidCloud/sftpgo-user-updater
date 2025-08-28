@@ -19,10 +19,12 @@ def get_new_user_data():
     
     if(os.environ['STORAGE_PROVIDER'] == "GCS"):
         
+        default_permissions = ['list', 'upload', 'overwrite', 'rename', 'copy']
+        
         content['filesystem']['provider'] = Provider.GCS.value
         content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
         content['filesystem']['gcsconfig']['automatic_credentials'] = 1
-        content['permissions']['/'] = ['*']
+        content['permissions']['/'] = default_permissions
         
     return jsonify(content)
     
