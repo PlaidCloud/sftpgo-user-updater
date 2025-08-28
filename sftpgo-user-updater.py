@@ -1,12 +1,29 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
+from enum import Enum
+import os
+
+
+class Provider(Enum):
+    Local = 0
+    S3 = 1
+    GCS = 2
+    Azure = 3
 
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def get_new_user_data():
+    
     content = request.get_json()
-    app.logger.debug('Formatted Body: %s', json.dumps(content))
+    
+    content['filesystem']['provider'] = Provider(os.environ['STORAGE_PROVIDER'])
+    
+    if(os.environ['STORAGE_PROVIDER'] == "GCS"):
+        content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
+        content['filesystem']['gcsconfig']['automatic_credentials'] = 1
+        
+    return jsonify(content)
     
 @app.before_request
 def log_request_info():
