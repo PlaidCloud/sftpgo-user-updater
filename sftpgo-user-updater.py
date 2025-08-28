@@ -6,7 +6,11 @@ app = Flask(__name__)
 @app.route("/", methods=['GET'])
 def get_new_user_data():
     content = request.get_json()
-    print(json.dumps(content))
     
+@app.before_request
+def log_request_info():
+    app.logger.debug('Headers: %s', request.headers)
+    app.logger.debug('Body: %s', json.dumps(request.get_data()))
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)
