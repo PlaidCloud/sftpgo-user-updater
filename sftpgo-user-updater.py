@@ -23,15 +23,13 @@ def get_new_user_data():
         default_permissions = ['list', 'upload', 'overwrite', 'rename', 'copy']
         
         with open(f"{filepath}/gcs-credentials.json", 'r') as credential_file:
-            gcskey = credential_file.read()
-            gcs_secret = {'status' : 'Plain', 'key' : gcskey}
-        
+            gcskey = json.load(credential_file) 
         content['status'] = 1
         content['home_dir'] = '/'
         content['filesystem']['provider'] = Provider.GCS.value
         content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
         content['filesystem']['gcsconfig']['automatic_credentials'] = 0
-        content['filesystem']['gcsconfig']['credentials'] = gcs_secret
+        content['filesystem']['gcsconfig']['credentials'] = gcskey
         content['permissions'] = {'/' : default_permissions} 
         
         app.logger.debug('RESPONDING WITH: %s', content)
