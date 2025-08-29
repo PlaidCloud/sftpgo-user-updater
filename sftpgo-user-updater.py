@@ -24,16 +24,16 @@ def get_new_user_data():
         
         with open(f"{filepath}/gcs-credentials.json", 'r') as credential_file:
             gcskey = json.load(credential_file)
-
+            gcs_secret = {'status' : 'Plain', 'payload' : gcskey}
+        
         content['status'] = 1
         content['home_dir'] = '/'
         content['filesystem']['provider'] = Provider.GCS.value
         content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
         content['filesystem']['gcsconfig']['automatic_credentials'] = 0
-        content['filesystem']['gcsconfig']['credentials'] = gcskey
+        content['filesystem']['gcsconfig']['credentials'] = gcs_secret
         content['permissions'] = {'/' : default_permissions} 
         
-        app.logger.debug('RESPONDING WITH: %s', json.dumps(content))
         
     return jsonify(content)
     
