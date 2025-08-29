@@ -21,6 +21,7 @@ def get_new_user_data():
     if(os.environ['STORAGE_PROVIDER'] == "GCS"):
         
         default_permissions = ['list', 'upload', 'overwrite', 'rename', 'copy']
+        admin_permissions = ['*']
         
         with open(f"{filepath}/gcs-credentials.json", 'r') as credential_file:
             gcskey = credential_file.read()
@@ -32,7 +33,7 @@ def get_new_user_data():
         content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
         content['filesystem']['gcsconfig']['automatic_credentials'] = 0
         content['filesystem']['gcsconfig']['credentials'] = gcs_secret
-        content['permissions'] = {'/' : '*'} 
+        content['permissions'] = {'/' : admin_permissions} 
         
         
     return jsonify(content)
