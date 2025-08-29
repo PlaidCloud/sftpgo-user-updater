@@ -22,7 +22,7 @@ def get_new_user_data():
         
         default_permissions = ['list', 'upload', 'overwrite', 'rename', 'copy']
         
-        with (open (filepath + "/" + "gcs-credentials.json"), 'r') as credential_file:
+        with open(f"{filepath}/gcs-credentials.json", 'r') as credential_file:
             gcskey = json.loads(credential_file)
             gcs_secret = {'status' : 'GCS', 'key' : gcskey}
         
