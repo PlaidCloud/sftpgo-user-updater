@@ -23,7 +23,7 @@ def get_new_user_data():
     if(os.environ['STORAGE_PROVIDER'] == "GCS"):
         
         default_permissions = ['list', 'upload', 'overwrite', 'rename', 'copy']
-        gcs_secret = {'status' : Provider.GCS.value, 'key' : gcskey}
+        gcs_secret = {'status' : 'GCS', 'key' : gcskey}
         
         content['status'] = 1
         content['home_dir'] = '/'
