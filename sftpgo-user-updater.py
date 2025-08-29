@@ -24,7 +24,7 @@ def get_new_user_data():
         
         with open(f"{filepath}/gcs-credentials.json", 'r') as credential_file:
             gcskey = credential_file.read()
-            gcs_secret = {'status' : 'GCS', 'key' : gcskey}
+            gcs_secret = {'status' : 'Plain', 'key' : gcskey}
         
         content['status'] = 1
         content['home_dir'] = '/'
