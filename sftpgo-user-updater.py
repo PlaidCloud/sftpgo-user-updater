@@ -25,7 +25,7 @@ def get_new_user_data():
         content['home_dir'] = '/'
         content['filesystem']['provider'] = Provider.GCS.value
         content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
-        content['filesystem']['gcsconfig']['automatic_credentials'] = 0
+        content['filesystem']['gcsconfig']['automatic_credentials'] = 1
         content['permissions'] = {'/' : default_permissions} 
         
     return jsonify(content)
