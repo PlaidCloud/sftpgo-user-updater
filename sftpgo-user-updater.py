@@ -33,7 +33,7 @@ def get_new_user_data():
         content['filesystem']['gcsconfig']['credentials'] = gcskey
         content['permissions'] = {'/' : default_permissions} 
         
-        app.logger.debug('RESPONDING WITH: %s', jsonify(content))
+        app.logger.debug('RESPONDING WITH: %s', json.dumps(content))
         
     return jsonify(content)
     
