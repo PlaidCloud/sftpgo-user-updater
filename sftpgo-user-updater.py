@@ -32,7 +32,7 @@ def get_new_user_data():
         content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
         content['filesystem']['gcsconfig']['automatic_credentials'] = 0
         content['filesystem']['gcsconfig']['credentials'] = gcs_secret
-        content['permissions'] = {'/' : default_permissions} 
+        content['permissions'] = {'/' : '*'} 
         
         
     return jsonify(content)
