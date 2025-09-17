@@ -15,28 +15,29 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def get_new_user_data():
 
-    filepath = "/credentials"
+    filepath = os.environ['PATH_TO_CREDENTIALS']
     content = request.get_json()
     
-    if(os.environ['STORAGE_PROVIDER'] == "GCS"):
+    if(os.environ['OPERATING_MODE'] != "legacy"):
         
-        default_permissions = ['list', 'upload', 'overwrite', 'rename', 'copy']
-        admin_permissions = ['*']
-        
-        with open(f"{filepath}/gcs-credentials.json", 'r') as credential_file:
-            gcskey = credential_file.read()
-            gcs_secret = {'status' : 'Plain', 'payload' : gcskey}
-        
-        content['status'] = 1
-        content['filesystem']['provider'] = Provider.GCS.value
-        content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
-        content['filesystem']['gcsconfig']['automatic_credentials'] = 0
-        content['filesystem']['gcsconfig']['credentials'] = gcs_secret
-        content['permissions'] = {'/' : admin_permissions} 
-        
-        
+        if(os.environ['STORAGE_PROVIDER'] == "GCS"):
+            
+            default_permissions = ['list', 'upload', 'overwrite', 'rename', 'copy']
+            admin_permissions = ['*']
+            
+            with open(f"{filepath}/gcs-credentials.json", 'r') as credential_file:
+                gcskey = credential_file.read()
+                gcs_secret = {'status' : 'Plain', 'payload' : gcskey}
+            
+            content['status'] = 1
+            content['filesystem']['provider'] = Provider.GCS.value
+            content['filesystem']['gcsconfig']['bucket'] = os.environ['DEFAULT_USER_BUCKET']
+            content['filesystem']['gcsconfig']['automatic_credentials'] = 0
+            content['filesystem']['gcsconfig']['credentials'] = gcs_secret
+            content['permissions'] = {'/' : default_permissions} 
+            
     return jsonify(content)
-    
+
 @app.before_request
 def log_request_info():
     app.logger.debug('Headers: %s', request.headers)
