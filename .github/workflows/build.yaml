@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Create tag
         id: docker_tag
         run: |
@@ -51,7 +51,7 @@ jobs:
           docker push us-docker.pkg.dev/plaidcloud-build/us-plaidcloud/tenant-tools/sftpgo-user-updater:${{ steps.docker_tag.outputs.tag }}
           docker push us-docker.pkg.dev/plaidcloud-build/us-plaidcloud/tenant-tools/sftpgo-user-updater:latest
       - name: Checkout Tenant Infrastructure Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: PlaidCloud/plaid-tenant-infrastructure
           ref: master
