@@ -1,0 +1,30 @@
+name: Trivy Security Scan
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  trivy:
+    name: Trivy Image Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build image for scanning
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          load: true
+          pull: true
+          tags: sftpgo-user-updater:pr-scan
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: sftpgo-user-updater:pr-scan
+          format: table
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+          cache: true
