@@ -1,10 +1,12 @@
 name: Trivy Security Scan
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
 jobs:
   trivy:
+    if: ${{ !github.event.pull_request.draft }}
     name: Trivy Image Scan
     runs-on: ubuntu-latest
     timeout-minutes: 15
